@@ -6,6 +6,19 @@
  */
 
 export default {
+  data() {
+    return {
+      circleShow: false,
+
+      connectLine: {
+        moving: false,
+        x1: 0,
+        y1: 0,
+        x2: 0,
+        y2: 0,
+      },
+    };
+  },
   computed: {
     /**
      * Get view box
@@ -35,7 +48,38 @@ export default {
       const expander = this.root.state.options.chart.expander;
       return expander.display || (expander.displayIfTaskListHidden && !this.root.state.options.taskList.display);
     },
+
+    /**
+     * get start circle position
+     *
+     * @returns {object}
+     */
+    getStartCircle() {
+      const task = this.task;
+      return { x: 0, y: task.height / 2 };
+    },
+
+    /**
+     * get start circle position
+     *
+     * @returns {object}
+     */
+    getEndCircle() {
+      const task = this.task;
+      return { x: task.width, y: task.height / 2 };
+    },
   },
+
+  mounted() {
+    document.addEventListener('mousemove', this.resizerMouseMove.bind(this));
+    document.addEventListener('mouseup', this.resizerMouseup.bind(this));
+  },
+
+  beforeDestroy() {
+    document.removeEventListener('mouseup', this.resizerMouseup);
+    document.removeEventListener('mousemove', this.resizerMouseMove);
+  },
+
   methods: {
     /**
      * Emit event
@@ -72,6 +116,60 @@ export default {
           default:
             eventEmitFun();
             break;
+        }
+      }
+    },
+
+    onChartBarWrapperMouseenter() {
+      this.circleShow = true;
+    },
+
+    onChartBarWrapperMouseleave() {
+      this.circleShow = false;
+    },
+
+    resizerMouseDown(event, params, offset) {
+      if (!this.connectLine.moving) {
+        this.circleShow = true;
+        const task = this.task;
+        const { setConnectLine } = this.root.state.connectLine;
+        this.circleShow = true;
+        this.connectLine.moving = true;
+        this.connectLine.x1 = task.x + params.x + offset;
+        this.connectLine.y1 = task.y + params.y;
+        setConnectLine({ startId: task.id });
+      }
+    },
+
+    resizerMouseup(event) {
+      if (this.connectLine.moving) {
+        const endId = this.getTaskIdByNode(event.target);
+        const { getConnectingLine, setConnectLine, delConnectLine } = this.root.state.connectLine;
+        setConnectLine({ endId: endId });
+        this.root.updateTask(endId, { dependentOn: [getConnectingLine().startId] });
+        delConnectLine();
+        this.connectLine.moving = false;
+      }
+    },
+
+    resizerMouseMove(event) {
+      if (this.connectLine.moving) {
+        const { setConnectLine } = this.root.state.connectLine;
+        const offset = event.offsetX > this.connectLine.x1 ? -2 : 2;
+        this.connectLine.x2 = event.offsetX + offset;
+        this.connectLine.y2 = event.offsetY + offset;
+        setConnectLine(this.connectLine);
+      }
+    },
+
+    getTaskIdByNode(node) {
+      const pNode = node.parentNode;
+      if (pNode && pNode.dataset) {
+        const { taskid } = pNode.dataset;
+        if (taskid) {
+          return taskid;
+        } else {
+          return this.getTaskIdByNode(pNode);
         }
       }
     },

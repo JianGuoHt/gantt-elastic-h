@@ -52,15 +52,24 @@
             <days-highlight></days-highlight>
             <grid></grid>
             <dependency-lines :tasks="root.visibleTasks"></dependency-lines>
+
             <g
               class="gantt-elastic__chart-row-wrapper"
               :style="{ ...root.style['chart-row-wrapper'] }"
               v-for="task in root.visibleTasks"
               :task="task"
               :key="task.id"
+              :data-taskid="task.id"
             >
               <component :task="task" :is="task.type"></component>
             </g>
+
+            <!-- 拖拽连接线 -->
+            <line
+              v-show="connectingLine.show"
+              v-bind="getContLine"
+              style="stroke: rgba(0, 119, 192, 0.5); stroke-width: 4"
+            ></line>
           </svg>
         </div>
       </div>
@@ -92,17 +101,43 @@ export default {
   data() {
     return {
       moving: false,
+
+      connectingLine: {
+        show: false,
+        startId: '',
+        endId: '',
+        x1: 0,
+        y1: 0,
+        x2: 0,
+        y2: 0,
+      },
     };
   },
   /**
    * Mounted
    */
   mounted() {
+    // document.addEventListener('mousemove', this.resizerMouseMove.bind(this));
+    // document.addEventListener('mouseup', this.resizerMouseup.bind(this), true);
+
     this.root.state.refs.chart = this.$refs.chart;
     this.root.state.refs.chartCalendarContainer = this.$refs.chartCalendarContainer;
     this.root.state.refs.chartGraphContainer = this.$refs.chartGraphContainer;
     this.root.state.refs.chartGraph = this.$refs.chartGraph;
     this.root.state.refs.chartGraphSvg = this.$refs.chartGraphSvg;
+
+    this.root.state.connectLine = {
+      setConnectLine: this.setConnectLine,
+      getConnectingLine: this.getConnectingLine,
+      delConnectLine: this.delConnectLine,
+    };
+    // this.root.state.setConnectLine = this.setConnectLine;
+    // this.root.state.getConnectingLine = this.getConnectingLine;
+  },
+
+  beforeDestroy() {
+    // document.removeEventListener('mouseup', this.resizerMouseup);
+    // document.removeEventListener('mousemove', this.resizerMouseMove);
   },
 
   computed: {
@@ -114,6 +149,53 @@ export default {
     getViewBox() {
       return `0 0 ${this.root.state.options.width} ${this.root.state.options.allVisibleTasksHeight}`;
     },
+
+    getContLine() {
+      const { x1, y1, x2, y2 } = this.connectingLine;
+      return { x1, y1, x2, y2 };
+    },
+  },
+
+  methods: {
+    setConnectLine(params) {
+      this.connectingLine.show = true;
+      Object.keys(params).forEach((key) => {
+        this.$set(this.connectingLine, key, params[key]);
+      });
+    },
+
+    delConnectLine() {
+      this.connectingLine.show = false;
+
+      this.connectingLine = Object.assign(this.connectingLine, {
+        startId: '',
+        endId: '',
+        x1: 0,
+        y1: 0,
+        x2: 0,
+        y2: 0,
+      });
+    },
+
+    getConnectingLine() {
+      return this.connectingLine;
+    },
   },
 };
 </script>
+
+<style lang="scss">
+.gantt-elastic__chart-row-bar-wrapper {
+  .gantt-elastic__chart-row-bar {
+    overflow: visible;
+  }
+
+  .gantt-elastic__chart-row-bar-circle {
+    cursor: pointer;
+  }
+
+  // &:hover .gantt-elastic__chart-row-bar-circle {
+  //   display: inline !important;
+  // }
+}
+</style>

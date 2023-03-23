@@ -120,15 +120,5 @@ export default {
         .filter((task) => task.dependencyLines.points !== null);
     },
   },
-
-  watch: {
-    dependencyTasks: {
-      deep: true,
-      immediate: true,
-      handler(n) {
-        console.log(n);
-      },
-    },
-  },
 };
 </script>

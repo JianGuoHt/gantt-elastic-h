@@ -14,6 +14,8 @@
       ...root.style['chart-row-task-wrapper'],
       ...task.style['chart-row-bar-wrapper'],
     }"
+    @mouseenter="onChartBarWrapperMouseenter"
+    @mouseleave="onChartBarWrapperMouseleave"
   >
     <foreignObject
       class="gantt-elastic__chart-expander gantt-elastic__chart-expander--task"
@@ -30,6 +32,9 @@
     >
       <expander :tasks="[task]" :options="root.state.options.chart.expander" type="chart"></expander>
     </foreignObject>
+
+    <chart-text :task="task" v-if="root.state.options.chart.text.display"></chart-text>
+
     <svg
       class="gantt-elastic__chart-row-bar gantt-elastic__chart-row-task"
       :style="{
@@ -70,10 +75,33 @@
           ...task.style['chart-row-bar-polygon'],
         }"
         :points="getPoints"
+        :data-taskid="task.id"
       ></polygon>
+
+      <circle
+        v-show="circleShow || connectLine.moving"
+        class="gantt-elastic__chart-row-bar-circle"
+        :cx="getStartCircle.x"
+        :cy="getStartCircle.y"
+        r="7"
+        transform="translate(-5)"
+        style="stroke: rgba(0, 119, 192, 1); fill: rgba(0, 119, 192, 1)"
+        @mousedown.stop="resizerMouseDown($event, getStartCircle, -5)"
+      ></circle>
+
+      <circle
+        v-show="circleShow || connectLine.moving"
+        class="gantt-elastic__chart-row-bar-circle"
+        :cx="getEndCircle.x"
+        :cy="getEndCircle.y"
+        r="7"
+        transform="translate(5)"
+        style="stroke: rgba(0, 119, 192, 1); fill: rgba(0, 119, 192, 1)"
+        @mousedown.stop="resizerMouseDown($event, getEndCircle, 5)"
+      ></circle>
+
       <progress-bar :task="task" :clip-path="'url(#' + clipPathId + ')'"></progress-bar>
     </svg>
-    <chart-text :task="task" v-if="root.state.options.chart.text.display"></chart-text>
   </g>
 </template>
 
@@ -116,5 +144,7 @@ export default {
       return `0,0 ${task.width},0 ${task.width},${task.height} 0,${task.height}`;
     },
   },
+
+  methods: {},
 };
 </script>

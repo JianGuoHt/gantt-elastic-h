@@ -124,7 +124,6 @@ export default {
      * Toggle expander
      */
     toggle() {
-      console.log(123);
       if (this.tasks.length === 0) {
         return;
       }

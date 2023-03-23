@@ -51,9 +51,6 @@ export default {
      * @param {Event} event
      */
     emitEvent(eventName, event) {
-      if (eventName.includes('click')) {
-        console.log('==column.eventName==', eventName);
-      }
       if (typeof this.column.events !== 'undefined' && typeof this.column.events[eventName] === 'function') {
         this.column.events[eventName]({
           event,

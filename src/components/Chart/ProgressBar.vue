@@ -174,7 +174,6 @@ export default {
     },
 
     resizerMouseup(event) {
-      console.log(123);
       this.resize.moving = false;
       const { moveEvent } = this.resize;
       moveEvent.offsetX = 0;

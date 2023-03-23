@@ -839,6 +839,8 @@ const GanttElastic = {
 
         taskRow['duration'] = taskRow['endTime'] - taskRow['startTime'];
       }
+
+      return taskRow;
     },
 
     /**

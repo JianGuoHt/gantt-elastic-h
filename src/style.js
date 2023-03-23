@@ -285,7 +285,7 @@ export default function getStyle(fontSize = '12px', fontFamily = 'Arial, sans-se
     },
     'chart-row-progress-bar-outline': {
       stroke: '#E74C3C',
-      'stroke-width': 2,
+      'stroke-width': 4,
     },
     'chart-dependency-lines-wrapper': {},
     'chart-dependency-lines-path': {

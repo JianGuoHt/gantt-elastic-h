@@ -105,3 +105,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.gantt-elastic__chart-row-text {
+  pointer-events: none;
+}
+</style>

@@ -1,3 +1,5 @@
+# **基于 Gantt-elastic 的加强版本！！**
+
 <h1>Gantt-elastic - Javascript Gantt Chart (editable, responsive)</h1>
 <h2>Javascript Gantt Chart for vue, jquery, vanilla js and other frameworks</h2>
 
