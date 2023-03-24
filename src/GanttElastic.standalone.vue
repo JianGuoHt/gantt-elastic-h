@@ -30,6 +30,7 @@ function getDate(hours) {
   const timeStamp = new Date(`${currentYear}-${currentMonth}-${currentDay} 00:00:00`).getTime();
   return new Date(timeStamp + hours * 60 * 60 * 1000).getTime();
 }
+
 export default {
   name: 'GanttElasticStandalone',
   components: {

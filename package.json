@@ -29,6 +29,7 @@
     "vue-slider-component": "^3.0.40",
     "vue-switches": "^2.0.1",
     "vue-template-compiler": "^2.6.10",
+    "vuepress": "^1.9.9",
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.8",
     "webpack-dev-server": "^3.8.0"
@@ -37,7 +38,9 @@
     "test": "npx cypress run --browser chrome",
     "build": "webpack",
     "dev": "webpack-dev-server --config webpack.dev.js",
-    "lint-fix": "eslint --ext .js,.vue src --fix"
+    "lint-fix": "eslint --ext .js,.vue src --fix",
+    "docs:dev": "vuepress dev docs --temp .temp",
+    "docs:build": "vuepress build docs"
   },
   "repository": {
     "type": "git",
