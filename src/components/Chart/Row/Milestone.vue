@@ -14,8 +14,6 @@
       ...root.style['chart-row-milestone-wrapper'],
       ...task.style['chart-row-bar-wrapper'],
     }"
-    @mouseenter="onChartBarWrapperMouseenter"
-    @mouseleave="onChartBarWrapperMouseleave"
   >
     <foreignObject
       class="gantt-elastic__chart-expander gantt-elastic__chart-expander--milestone"
@@ -50,6 +48,7 @@
       @click="emitEvent('click', $event)"
       @dblclick="emitEvent('dblclick', $event)"
       @mouseenter="emitEvent('mouseenter', $event)"
+      @mouseleave="emitEvent('mouseleave', $event)"
       @mouseover="emitEvent('mouseover', $event)"
       @mouseout="emitEvent('mouseout', $event)"
       @mousemove="emitEvent('mousemove', $event)"
@@ -78,25 +77,21 @@
       ></polygon>
 
       <circle
-        v-show="circleShow || connectLine.moving"
         class="gantt-elastic__chart-row-bar-circle"
         :cx="getStartCircle.x"
         :cy="getStartCircle.y"
-        r="7"
-        transform="translate(-5)"
-        style="stroke: rgba(0, 119, 192, 1); fill: rgba(0, 119, 192, 1)"
-        @mousedown.stop="resizerMouseDown($event, getStartCircle, -5)"
+        :r="circle.r"
+        :style="getCircleStyle"
+        @mousedown.stop="onMouseDown($event, getStartCircle)"
       ></circle>
 
       <circle
-        v-show="circleShow || connectLine.moving"
         class="gantt-elastic__chart-row-bar-circle"
         :cx="getEndCircle.x"
         :cy="getEndCircle.y"
-        r="7"
-        transform="translate(5)"
-        style="stroke: rgba(0, 119, 192, 1); fill: rgba(0, 119, 192, 1)"
-        @mousedown.stop="resizerMouseDown($event, getEndCircle, 5)"
+        :r="circle.r"
+        :style="getCircleStyle"
+        @mousedown.stop="onMouseDown($event, getEndCircle)"
       ></circle>
 
       <progress-bar :task="task" :clip-path="'url(#' + clipPathId + ')'"></progress-bar>

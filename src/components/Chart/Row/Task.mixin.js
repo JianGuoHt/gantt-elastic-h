@@ -8,7 +8,13 @@
 export default {
   data() {
     return {
-      circleShow: false,
+      circleOffset: 5,
+
+      circle: {
+        show: false,
+        r: 6,
+        offset: 7,
+      },
 
       connectLine: {
         moving: false,
@@ -55,8 +61,8 @@ export default {
      * @returns {object}
      */
     getStartCircle() {
-      const task = this.task;
-      return { x: 0, y: task.height / 2 };
+      const { task, circle } = this;
+      return { x: 0 - circle.offset, y: task.height / 2 };
     },
 
     /**
@@ -65,19 +71,39 @@ export default {
      * @returns {object}
      */
     getEndCircle() {
-      const task = this.task;
-      return { x: task.width, y: task.height / 2 };
+      const { task, circle } = this;
+      return { x: task.width + circle.offset, y: task.height / 2 };
+    },
+
+    /**
+     * get circle show
+     * @returns {boolean}
+     */
+    getCircleShow() {
+      return this.circle.show || this.connectLine.moving;
+    },
+
+    /**
+     * get circle style
+     * @returns {object}
+     */
+    getCircleStyle() {
+      return {
+        stroke: 'rgba(0, 119, 192, 1)',
+        fill: 'rgba(0, 119, 192, 1)',
+        opacity: this.getCircleShow ? '1' : '0',
+      };
     },
   },
 
   mounted() {
-    document.addEventListener('mousemove', this.resizerMouseMove.bind(this));
-    document.addEventListener('mouseup', this.resizerMouseup.bind(this));
+    document.addEventListener('mousemove', this.onMouseMove.bind(this));
+    document.addEventListener('mouseup', this.onMouseup.bind(this));
   },
 
   beforeDestroy() {
-    document.removeEventListener('mouseup', this.resizerMouseup);
-    document.removeEventListener('mousemove', this.resizerMouseMove);
+    document.removeEventListener('mouseup', this.onMouseup);
+    document.removeEventListener('mousemove', this.onMouseMove);
   },
 
   methods: {
@@ -113,6 +139,17 @@ export default {
               eventEmitFun();
             }
             break;
+
+          case 'mouseenter':
+            this.setCircleShow();
+            eventEmitFun();
+            break;
+
+          case 'mouseleave':
+            this.setCircleHidden();
+            eventEmitFun();
+            break;
+
           default:
             eventEmitFun();
             break;
@@ -120,28 +157,32 @@ export default {
       }
     },
 
-    onChartBarWrapperMouseenter() {
-      this.circleShow = true;
+    // 显示连接线锚点
+    setCircleShow() {
+      this.circle.show = true;
     },
 
-    onChartBarWrapperMouseleave() {
-      this.circleShow = false;
+    // 隐藏连接线锚点
+    setCircleHidden() {
+      this.circle.show = false;
     },
 
-    resizerMouseDown(event, params, offset) {
+    // 鼠标按下事件
+    onMouseDown(event, params) {
       if (!this.connectLine.moving) {
-        this.circleShow = true;
+        this.circle.show = true;
         const task = this.task;
         const { setConnectLine } = this.root.state.connectLine;
-        this.circleShow = true;
+        this.circle.show = true;
         this.connectLine.moving = true;
-        this.connectLine.x1 = task.x + params.x + offset;
+        this.connectLine.x1 = task.x + params.x;
         this.connectLine.y1 = task.y + params.y;
         setConnectLine({ startId: task.id });
       }
     },
 
-    resizerMouseup(event) {
+    // 鼠标松开事件
+    onMouseup(event) {
       if (this.connectLine.moving) {
         const endId = this.getTaskIdByNode(event.target);
         const { getConnectingLine, setConnectLine, delConnectLine } = this.root.state.connectLine;
@@ -152,7 +193,8 @@ export default {
       }
     },
 
-    resizerMouseMove(event) {
+    // 鼠标移动事件
+    onMouseMove(event) {
       if (this.connectLine.moving) {
         const { setConnectLine } = this.root.state.connectLine;
         const offset = event.offsetX > this.connectLine.x1 ? -2 : 2;
@@ -162,6 +204,7 @@ export default {
       }
     },
 
+    // 递归 获取dom节点上的 taskID
     getTaskIdByNode(node) {
       const pNode = node.parentNode;
       if (pNode && pNode.dataset) {

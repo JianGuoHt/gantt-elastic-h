@@ -26,7 +26,10 @@
     >
       <slot></slot>
       <div class="gantt-elastic__task-list-item-value-container" :style="containerStyle">
-        <div v-if="!html" class="gantt-elastic__task-list-item-value" :style="valueStyle">
+        <div v-if="slot" class="gantt-elastic__task-list-item-value" :style="valueStyle">
+          <taskListSlot :column="column" :task="task" />
+        </div>
+        <div v-else-if="!html" class="gantt-elastic__task-list-item-value" :style="valueStyle">
           {{ value }}
         </div>
         <div v-else class="gantt-elastic__task-list-item-value" :style="valueStyle" v-html="value"></div>
@@ -36,13 +39,16 @@
 </template>
 
 <script>
+import taskListSlot from './slot';
 export default {
   name: 'ItemColumn',
   inject: ['root'],
   props: ['column', 'task'],
+  components: { taskListSlot },
   data() {
     return {};
   },
+  mounted() {},
   methods: {
     /**
      * Emit event
@@ -103,6 +109,18 @@ export default {
      */
     html() {
       if (typeof this.column.html !== 'undefined' && this.column.html === true) {
+        return true;
+      }
+      return false;
+    },
+
+    /**
+     * Should we display slot or just text?
+     *
+     * @returns {boolean}
+     */
+    slot() {
+      if (!this.html && typeof this.column.slot === 'string' && this.column.slot !== '') {
         return true;
       }
       return false;

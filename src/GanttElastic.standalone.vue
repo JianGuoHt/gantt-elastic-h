@@ -10,6 +10,11 @@
   <gantt-elastic :tasks="tasks" :options="options" :dynamicStyle="dynamicStyle">
     <component v-if="components.header" :is="components.header" slot="header"></component>
     <component v-if="components.footer" :is="components.footer" slot="footer"></component>
+    <div>xxx</div>
+
+    <template slot="label" slot-scope="{ task }">
+      <div>{{ task.label }}</div>
+    </template>
   </gantt-elastic>
 </template>
 
@@ -267,7 +272,8 @@ export default {
               value: 'label',
               width: 200,
               expander: true,
-              html: true,
+              // html: true,
+              slot: 'label',
               events: {
                 click({ data, column }) {
                   alert('description clicked!\n' + data.label);
@@ -297,7 +303,8 @@ export default {
               id: 5,
               label: '%',
               value: 'progress',
-              width: 35,
+              width: 70,
+              html: true,
               style: {
                 'task-list-header-label': {
                   'text-align': 'center',

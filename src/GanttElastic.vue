@@ -143,7 +143,7 @@ function getOptions(userOptions) {
         type: 'chart',
         display: false, //*
         displayIfTaskListHidden: true, //*
-        offset: 4, //*
+        offset: 12, //*
         size: 18,
       },
     },
