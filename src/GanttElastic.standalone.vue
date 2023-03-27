@@ -7,10 +7,9 @@
  */
 -->
 <template>
-  <gantt-elastic :tasks="tasks" :options="options" :dynamicStyle="dynamicStyle">
+  <gantt-elastic :tasks="tasks" :options="options" :dynamicStyle="dynamicStyle" @main-view-mousemove="aa">
     <component v-if="components.header" :is="components.header" slot="header"></component>
     <component v-if="components.footer" :is="components.footer" slot="footer"></component>
-    <div>xxx</div>
 
     <template slot="label" slot-scope="{ task }">
       <div>{{ task.label }}</div>
@@ -49,7 +48,7 @@ export default {
           duration: 15 * 24 * 60 * 60 * 1000,
           percent: 85,
           type: 'project',
-          //collapsed: true,
+          // collapsed: false,
         },
         {
           id: 2,
@@ -234,8 +233,8 @@ export default {
         taskMapping: {
           progress: 'percent',
         },
-        maxRows: 1000,
-        maxHeight: 500,
+        // maxRows: 2,
+        // maxHeight: 500,
         title: {
           label: 'Your project title as html (link or whatever...)',
           html: false,
@@ -245,7 +244,13 @@ export default {
         },
         calendar: {
           hour: {
-            display: true,
+            // display: true,
+
+            format: {
+              short(date) {
+                return '1';
+              },
+            },
           },
         },
         chart: {
@@ -322,6 +327,12 @@ export default {
       },
       dynamicStyle: {},
     };
+  },
+
+  methods: {
+    aa() {
+      console.log(123);
+    },
   },
 };
 </script>

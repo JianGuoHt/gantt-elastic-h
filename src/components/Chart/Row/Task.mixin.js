@@ -121,8 +121,8 @@ export default {
         };
 
         const eventEmitFun = () => {
-          this.root.$emit(`chart-${eventName}`, eventObj);
-          this.root.$emit(`chart-${this.task.type}-${eventName}`, eventObj);
+          this.root.$emit(`chart-task-${eventName}`, eventObj);
+          this.root.$emit(`chart-task-${this.task.type}-${eventName}`, eventObj);
         };
 
         switch (eventName) {

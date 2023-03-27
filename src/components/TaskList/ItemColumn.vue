@@ -77,8 +77,8 @@ export default {
       };
 
       const eventEmitFun = () => {
-        this.root.$emit(`taskList-${eventName}`, eventObj);
-        this.root.$emit(`taskList-${this.task.type}-${eventName}`, eventObj);
+        this.root.$emit(`task-list-${eventName}`, eventObj);
+        this.root.$emit(`task-list-${this.task.type}-${eventName}`, eventObj);
       };
 
       switch (eventName) {
