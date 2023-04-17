@@ -502,7 +502,7 @@ if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
 var add = __webpack_require__(2).default
-var update = add("676445cc", content, false, {});
+var update = add("04c12213", content, false, {});
 // Hot Module Replacement
 if(false) {}
 
@@ -1551,8 +1551,8 @@ module.exports = g;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_GanttElastic_vue_vue_type_style_index_0_id_4fe0c496_prod_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_GanttElastic_vue_vue_type_style_index_0_id_4fe0c496_prod_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_GanttElastic_vue_vue_type_style_index_0_id_4fe0c496_prod_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_GanttElastic_vue_vue_type_style_index_0_id_330efaac_prod_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_GanttElastic_vue_vue_type_style_index_0_id_330efaac_prod_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_GanttElastic_vue_vue_type_style_index_0_id_330efaac_prod_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
 
 
@@ -1583,7 +1583,7 @@ __webpack_require__.d(__webpack_exports__, "mergeDeep", function() { return /* r
 __webpack_require__.d(__webpack_exports__, "mergeDeepReactive", function() { return /* reexport */ mergeDeepReactive; });
 __webpack_require__.d(__webpack_exports__, "notEqualDeep", function() { return /* reexport */ notEqualDeep; });
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/vue-loader/lib??vue-loader-options!./src/GanttElastic.vue?vue&type=template&id=4fe0c496&
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/vue-loader/lib??vue-loader-options!./src/GanttElastic.vue?vue&type=template&id=330efaac&
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c,
@@ -1614,7 +1614,7 @@ var staticRenderFns = []
 render._withStripped = true
 
 
-// CONCATENATED MODULE: ./src/GanttElastic.vue?vue&type=template&id=4fe0c496&
+// CONCATENATED MODULE: ./src/GanttElastic.vue?vue&type=template&id=330efaac&
 
 // EXTERNAL MODULE: external "Vue"
 var external_Vue_ = __webpack_require__(7);
@@ -2412,8 +2412,8 @@ TaskListItemvue_type_template_id_27273714_render._withStripped = true
 
 // CONCATENATED MODULE: ./src/components/TaskList/TaskListItem.vue?vue&type=template&id=27273714&
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/vue-loader/lib??vue-loader-options!./src/components/TaskList/ItemColumn.vue?vue&type=template&id=a1d70992&
-var ItemColumnvue_type_template_id_a1d70992_render = function render() {
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/vue-loader/lib??vue-loader-options!./src/components/TaskList/ItemColumn.vue?vue&type=template&id=7041fdd1&
+var ItemColumnvue_type_template_id_7041fdd1_render = function render() {
   var _vm = this,
     _c = _vm._self._c
   return _c(
@@ -2513,11 +2513,11 @@ var ItemColumnvue_type_template_id_a1d70992_render = function render() {
     ]
   )
 }
-var ItemColumnvue_type_template_id_a1d70992_staticRenderFns = []
-ItemColumnvue_type_template_id_a1d70992_render._withStripped = true
+var ItemColumnvue_type_template_id_7041fdd1_staticRenderFns = []
+ItemColumnvue_type_template_id_7041fdd1_render._withStripped = true
 
 
-// CONCATENATED MODULE: ./src/components/TaskList/ItemColumn.vue?vue&type=template&id=a1d70992&
+// CONCATENATED MODULE: ./src/components/TaskList/ItemColumn.vue?vue&type=template&id=7041fdd1&
 
 // CONCATENATED MODULE: ./src/components/TaskList/slot.js
 /* harmony default export */ var slot = ({
@@ -2589,8 +2589,8 @@ ItemColumnvue_type_template_id_a1d70992_render._withStripped = true
       };
 
       const eventEmitFun = () => {
-        this.root.$emit(`taskList-${eventName}`, eventObj);
-        this.root.$emit(`taskList-${this.task.type}-${eventName}`, eventObj);
+        this.root.$emit(`task-list-${eventName}`, eventObj);
+        this.root.$emit(`task-list-${this.task.type}-${eventName}`, eventObj);
       };
 
       switch (eventName) {
@@ -2694,8 +2694,8 @@ ItemColumnvue_type_template_id_a1d70992_render._withStripped = true
 
 var ItemColumn_component = normalizeComponent(
   TaskList_ItemColumnvue_type_script_lang_js_,
-  ItemColumnvue_type_template_id_a1d70992_render,
-  ItemColumnvue_type_template_id_a1d70992_staticRenderFns,
+  ItemColumnvue_type_template_id_7041fdd1_render,
+  ItemColumnvue_type_template_id_7041fdd1_staticRenderFns,
   false,
   null,
   null,
@@ -4683,8 +4683,8 @@ var ProgressBar_component = normalizeComponent(
         };
 
         const eventEmitFun = () => {
-          this.root.$emit(`chart-${eventName}`, eventObj);
-          this.root.$emit(`chart-${this.task.type}-${eventName}`, eventObj);
+          this.root.$emit(`chart-task-${eventName}`, eventObj);
+          this.root.$emit(`chart-task-${this.task.type}-${eventName}`, eventObj);
         };
 
         switch (eventName) {
@@ -6833,51 +6833,58 @@ const GanttElastic = {
       return null;
     },
 
+    getTaskMapping() {
+      return this.state.options.taskMapping;
+    },
+
     /**
-     * update task by id
+     * 更新任务
+     * 由于任务时间特殊，因此该方法无法更改时间
      *
      * @param {any} taskId 任务id
      * @param {object|null} data 修改后的 TaskRow
      * @param {object|null} props 配置选项
      */
-    updateTask(taskId, data, props = {}) {
+    updateTask(taskId, data) {
       if (!taskId) {
         return;
       }
-      const propOptions = Object.assign(
-        {
-          dataType: '', // daterange
-          timeArr: 'timeArr',
-        },
-        props
-      );
+
       let taskRow = this.getTask(taskId);
 
       Object.keys(data).forEach((item) => {
-        if (typeof taskRow === 'object' && taskRow.hasOwnProperty('__ob__')) {
+        // 过滤
+        if (['id', 'start', 'startTime', 'end', 'endTime'].includes(item)) {
+          return;
+        }
+
+        if (typeof taskRow === 'object' && taskRow.hasOwnProperty('__ob__') && typeof taskRow[item] !== 'undefined') {
           taskRow[item] = data[item];
         }
       });
 
-      const { timeArr: timeProp } = propOptions;
+      return taskRow;
+    },
 
-      if (data[timeProp] || data['start'] || data['startTime']) {
-        if (propOptions.dataType === 'daterange') {
-          taskRow['startTime'] = data[timeProp][0];
-          taskRow['start'] = data[timeProp][0];
-          taskRow['endTime'] = data[timeProp][1];
-          taskRow['end'] = data[timeProp][1];
-        } else {
-          taskRow['startTime'] = data['start'] || data['startTime'];
-          taskRow['start'] = data['start'] || data['startTime'];
-          taskRow['endTime'] = data['end'] || data['endTime'];
-          taskRow['end'] = data['end'] || data['endTime'];
-        }
-
-        taskRow['duration'] = taskRow['endTime'] - taskRow['startTime'];
+    /**
+     * 更新任务时间
+     * @param {*} taskId
+     * @param {number} start
+     * @param {number} end
+     */
+    updateTaskTime(taskId, start, end) {
+      if (!taskId) {
+        return;
       }
 
-      return taskRow;
+      let taskRow = this.getTask(taskId);
+
+      taskRow['startTime'] = start;
+      taskRow['start'] = start;
+      taskRow['endTime'] = end;
+      taskRow['end'] = end;
+
+      taskRow['duration'] = taskRow['endTime'] - taskRow['startTime'];
     },
 
     /**
@@ -7741,8 +7748,8 @@ const GanttElastic = {
 
 // CONCATENATED MODULE: ./src/GanttElastic.vue?vue&type=script&lang=js&
  /* harmony default export */ var src_GanttElasticvue_type_script_lang_js_ = (GanttElasticvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/GanttElastic.vue?vue&type=style&index=0&id=4fe0c496&prod&lang=css&
-var GanttElasticvue_type_style_index_0_id_4fe0c496_prod_lang_css_ = __webpack_require__(16);
+// EXTERNAL MODULE: ./src/GanttElastic.vue?vue&type=style&index=0&id=330efaac&prod&lang=css&
+var GanttElasticvue_type_style_index_0_id_330efaac_prod_lang_css_ = __webpack_require__(16);
 
 // CONCATENATED MODULE: ./src/GanttElastic.vue
 

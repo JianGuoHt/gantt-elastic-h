@@ -4,28 +4,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   devServer: {
-    // publicPath: path.join(__dirname, './dist'),
-    // compress: false,
     port: 9000,
-    // openPage: '/examples/vue.edit.html',
   },
   devtool: 'inline-source-map',
   mode: 'development',
-  // entry: './src/bundle.js',
-  entry: './src/index.js',
-  output: {
-    // path: path.resolve(__dirname, 'dist'),
-    // filename: 'GanttElastic.umd.js',
-    // library: 'GanttElastic',
-    // libraryTarget: 'umd',
-    // libraryExport: 'default',
-  },
-  // externals: ['vue'],
-  // resolve: {
-  //   alias: {
-  //     vue$: 'vue/dist/vue.esm.js',
-  //   },
-  // },
+  entry: './demo/index.js',
+  output: {},
+
   module: {
     rules: [
       {
@@ -39,6 +24,10 @@ module.exports = {
       {
         test: /\.scss$/,
         use: ['vue-style-loader', 'css-loader', 'sass-loader'],
+      },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        loader: 'file-loader',
       },
     ],
   },

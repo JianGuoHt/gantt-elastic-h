@@ -796,51 +796,58 @@ const GanttElastic = {
       return null;
     },
 
+    getTaskMapping() {
+      return this.state.options.taskMapping;
+    },
+
     /**
-     * update task by id
+     * 更新任务
+     * 由于任务时间特殊，因此该方法无法更改时间
      *
      * @param {any} taskId 任务id
      * @param {object|null} data 修改后的 TaskRow
      * @param {object|null} props 配置选项
      */
-    updateTask(taskId, data, props = {}) {
+    updateTask(taskId, data) {
       if (!taskId) {
         return;
       }
-      const propOptions = Object.assign(
-        {
-          dataType: '', // daterange
-          timeArr: 'timeArr',
-        },
-        props
-      );
+
       let taskRow = this.getTask(taskId);
 
       Object.keys(data).forEach((item) => {
-        if (typeof taskRow === 'object' && taskRow.hasOwnProperty('__ob__')) {
+        // 过滤
+        if (['id', 'start', 'startTime', 'end', 'endTime'].includes(item)) {
+          return;
+        }
+
+        if (typeof taskRow === 'object' && taskRow.hasOwnProperty('__ob__') && typeof taskRow[item] !== 'undefined') {
           taskRow[item] = data[item];
         }
       });
 
-      const { timeArr: timeProp } = propOptions;
+      return taskRow;
+    },
 
-      if (data[timeProp] || data['start'] || data['startTime']) {
-        if (propOptions.dataType === 'daterange') {
-          taskRow['startTime'] = data[timeProp][0];
-          taskRow['start'] = data[timeProp][0];
-          taskRow['endTime'] = data[timeProp][1];
-          taskRow['end'] = data[timeProp][1];
-        } else {
-          taskRow['startTime'] = data['start'] || data['startTime'];
-          taskRow['start'] = data['start'] || data['startTime'];
-          taskRow['endTime'] = data['end'] || data['endTime'];
-          taskRow['end'] = data['end'] || data['endTime'];
-        }
-
-        taskRow['duration'] = taskRow['endTime'] - taskRow['startTime'];
+    /**
+     * 更新任务时间
+     * @param {*} taskId
+     * @param {number} start
+     * @param {number} end
+     */
+    updateTaskTime(taskId, start, end) {
+      if (!taskId) {
+        return;
       }
 
-      return taskRow;
+      let taskRow = this.getTask(taskId);
+
+      taskRow['startTime'] = start;
+      taskRow['start'] = start;
+      taskRow['endTime'] = end;
+      taskRow['end'] = end;
+
+      taskRow['duration'] = taskRow['endTime'] - taskRow['startTime'];
     },
 
     /**

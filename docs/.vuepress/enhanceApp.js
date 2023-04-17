@@ -1,5 +1,8 @@
-import GanttElasticStandalone from '../../src/GanttElastic.standalone.vue';
+import GanttElasticStandalone from '../../demo/GanttElastic.standalone.vue';
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 
 export default ({ Vue }) => {
+  Vue.use(ElementUI);
   Vue.component('GanttElastic', GanttElasticStandalone);
 };

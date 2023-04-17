@@ -12,7 +12,7 @@ sidebar: auto
 
 <GanttElastic></GanttElastic>
 ::: details 点击查看代码
-<<< @/src/GanttElastic.standalone.vue
+<<< @/demo/GanttElastic.standalone.vue
 :::
 
 ## 配置
@@ -100,16 +100,16 @@ sidebar: auto
 
 组件需要用到的字段枚举
 
-| 参数      | 说明                                           | 类型    | 可选值                   | 默认值    |
-| --------- | ---------------------------------------------- | ------- | ------------------------ | --------- |
-| id        | 任务 id                                        | String  | --                       | id        |
-| start     | 任务开始时间                                   | date    | --                       | start     |
-| label     | 任务名称                                       | String  | --                       | label     |
-| duration  | 任务持续时间                                   | date    | --                       | duration  |
-| progress  | 任务完成进度                                   | Number  | --                       | progress  |
-| type      | 任务类型, <span style="color: red">必填</span> | String  | milestone, project, task | type      |
-| style     | 任务样式，具体看下表                           | Object  | --                       | style     |
-| collapsed | 是否默认展开                                   | Boolean | --                       | collapsed |
+| 参数      | 说明                 | 类型    | 可选值 | 默认值    |
+| --------- | -------------------- | ------- | ------ | --------- |
+| id        | 任务 id              | String  | --     | id        |
+| start     | 任务开始时间         | date    | --     | start     |
+| label     | 任务名称             | String  | --     | label     |
+| duration  | 任务持续时间         | date    | --     | duration  |
+| progress  | 任务完成进度         | Number  | --     | progress  |
+| type      | 任务类型             | String  | --     | type      |
+| style     | 任务样式，具体看下表 | Object  | --     | style     |
+| collapsed | 是否默认展开         | Boolean | --     | collapsed |
 
 ### options.scroll
 
@@ -227,6 +227,15 @@ date 为 dayjs 实例
 | long   | 缩放层级，小 | Function(date) | --     | --     |
 | medium | 缩放层级，中 | Function(date) | --     | --     |
 | short  | 缩放层级，大 | Function(date) | --     | --     |
+
+### Methods
+
+| 方法名称       | 说明                                                         | 参数                               |
+| -------------- | ------------------------------------------------------------ | ---------------------------------- |
+| updateTask     | 更新任务, 该方法不能更新任务时间，如需更新时间使用 `updateTaskTime`；<br/>taskid： 任务ID；<br/>data： 修改后的数据；<br /> | Function(taskId, data, props = {}) |
+| updateTaskTime | 更新任务时间;<br/>taskid： 任务ID；<br/>start： 开始时间；<br />end：结束时间 | Function(taskId, start, end)       |
+| getTask        | 根据任务id，获取任务数据；                                   | Function(taskId)                   |
+| getChildren    | 根据任务id，获取当前任务的子任务；                           | Function(taskId)                   |
 
 ### Events
 

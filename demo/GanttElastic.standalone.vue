@@ -7,19 +7,59 @@
  */
 -->
 <template>
-  <gantt-elastic :tasks="tasks" :options="options" :dynamicStyle="dynamicStyle" @main-view-mousemove="aa">
-    <component v-if="components.header" :is="components.header" slot="header"></component>
-    <component v-if="components.footer" :is="components.footer" slot="footer"></component>
+  <div>
+    <gantt-elastic ref="elastic" :tasks="tasks" :options="options" :dynamicStyle="dynamicStyle">
+      <component v-if="components.header" :is="components.header" slot="header"></component>
+      <component v-if="components.footer" :is="components.footer" slot="footer"></component>
 
-    <template slot="label" slot-scope="{ task }">
-      <div>{{ task.label }}</div>
-    </template>
-  </gantt-elastic>
+      <template slot="label" slot-scope="{ task }">
+        <div>{{ task.label }}</div>
+      </template>
+
+      <template slot="operation" slot-scope="row">
+        <el-button size="mini" @click="onUpdate(row)">修改</el-button>
+      </template>
+    </gantt-elastic>
+
+    <el-dialog title="修改" :visible.sync="dialogFormVisible">
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
+        <el-form-item label="Description" prop="label">
+          <el-input v-model="form.label" placeholder="Description"></el-input>
+        </el-form-item>
+        <el-form-item label="Assigned to" prop="user">
+          <el-input v-model="form.user" placeholder="Assigned to"></el-input>
+        </el-form-item>
+        <el-form-item label="Start" prop="timeArr">
+          <el-date-picker
+            v-model="form.timeArr"
+            type="daterange"
+            placeholder="选择日期"
+            format="yyyy 年 MM 月 dd 日"
+            value-format="timestamp"
+          >
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="progress" prop="progress">
+          <el-input-number
+            v-model="form.progress"
+            controls-position="right"
+            :min="0"
+            :max="100"
+            placeholder="progress"
+          ></el-input-number>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="onSubmit">确 定</el-button>
+      </div>
+    </el-dialog>
+  </div>
 </template>
 
 <script>
 import dayjs from 'dayjs';
-import GanttElastic from './GanttElastic.vue';
+import GanttElastic from '../src/GanttElastic.vue';
 
 function getDate(hours) {
   const currentDate = new Date();
@@ -38,6 +78,21 @@ export default {
   props: ['header', 'footer'],
   data() {
     return {
+      dialogFormVisible: false,
+      form: {
+        id: '',
+        label: '',
+        user: '',
+        progress: '',
+        timeArr: [],
+      },
+      rules: {
+        label: [{ required: true, message: '不能为空', trigger: ['blur', 'change'] }],
+        user: [{ required: true, message: '不能为空', trigger: ['blur', 'change'] }],
+        progress: [{ required: true, message: '不能为空', trigger: ['blur', 'change'] }],
+        timeArr: [{ required: true, message: '不能为空', trigger: ['blur', 'change'] }],
+      },
+
       components: {},
       tasks: [
         {
@@ -243,15 +298,14 @@ export default {
           height: 24,
         },
         calendar: {
-          hour: {
-            // display: true,
-
-            format: {
-              short(date) {
-                return '1';
-              },
-            },
-          },
+          // hour: {
+          //   // display: true,
+          //   format: {
+          //     short(date) {
+          //       return '1';
+          //     },
+          //   },
+          // },
         },
         chart: {
           progress: {
@@ -322,6 +376,23 @@ export default {
                 },
               },
             },
+            {
+              id: 6,
+              label: '操作',
+              value: 'operation',
+              slot: 'operation',
+              width: 80,
+              style: {
+                'task-list-header-label': {
+                  'text-align': 'center',
+                  width: '100%',
+                },
+                'task-list-item-value-container': {
+                  'text-align': 'center',
+                  width: '100%',
+                },
+              },
+            },
           ],
         },
       },
@@ -330,8 +401,32 @@ export default {
   },
 
   methods: {
-    aa() {
-      console.log(123);
+    onUpdate(row) {
+      console.log(row);
+      Object.keys(this.form).forEach((item) => {
+        if (item === 'timeArr') {
+          this.form[item] = [row.task['startTime'], row.task['endTime']];
+        } else {
+          this.form[item] = row.task[item];
+        }
+      });
+      this.dialogFormVisible = true;
+    },
+
+    onSubmit() {
+      const elastic = this.$refs.elastic;
+      this.$refs['form'].validate((valid) => {
+        if (valid) {
+          const time = this.form.timeArr;
+          elastic.updateTask(this.form.id, this.form);
+          elastic.updateTaskTime(this.form.id, time[0], time[1]);
+          this.dialogFormVisible = false;
+          console.log(this.tasks);
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
     },
   },
 };

@@ -1,37 +1,16 @@
 const path = require('path');
 const { VueLoaderPlugin } = require('vue-loader');
 const TerserPlugin = require('terser-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = [
   {
     mode: 'production',
-    entry: './src/bundle.js',
+    entry: './demo/index.js',
     output: {
-      path: path.resolve(__dirname, 'dist'),
-      filename: 'bundle.js',
+      path: path.resolve(__dirname, 'demo/dist'),
+      // clean: true,
     },
-    devtool: 'source-map',
-    externals: {
-      vue: 'Vue',
-      //vuex: 'Vuex'
-      //dayjs: 'dayjs'
-    },
-    optimization: {
-      minimize: true,
-      namedModules: false,
-      minimizer: [
-        new TerserPlugin({
-          terserOptions: {
-            mangle: false,
-          },
-        }),
-      ],
-    },
-    /*resolve: {
-      alias: {
-        vue$: 'vue/dist/vue.esm.js'
-      }
-    },*/
     module: {
       rules: [
         {
@@ -46,9 +25,18 @@ module.exports = [
           test: /\.scss$/,
           use: ['vue-style-loader', 'css-loader', 'sass-loader'],
         },
+        {
+          test: /\.(eot|svg|ttf|woff|woff2)$/,
+          loader: 'file-loader',
+        },
       ],
     },
-    plugins: [new VueLoaderPlugin()],
+    plugins: [
+      new HtmlWebpackPlugin({
+        template: './index.html',
+      }),
+      new VueLoaderPlugin(),
+    ],
   },
   {
     mode: 'production',

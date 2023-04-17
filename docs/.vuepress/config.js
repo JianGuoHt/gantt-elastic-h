@@ -3,8 +3,8 @@ module.exports = {
   description: '基于 gantt-elastic 的二次封装加强组件',
   base: '/',
   themeConfig: {
-    updatePopup: true,
-    displayAllHeaders: true,
+    // updatePopup: true,
+    // displayAllHeaders: true,
     nav: [
       { text: '首页', link: '/' },
       { text: '文档', link: '/doc' },
