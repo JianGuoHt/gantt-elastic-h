@@ -1,6 +1,6 @@
 module.exports = {
   title: 'gantt-elastic-h | 使用文档',
-  description: '基于 gantt-elastic 的二次封装加强组件',
+  description: '基于 gantt-elastic 的二次封装',
   base: '/gantt-elastic-h/',
   themeConfig: {
     // updatePopup: true,
