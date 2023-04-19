@@ -3,26 +3,15 @@
 <h1>Gantt-elastic - Javascript Gantt Chart (editable, responsive)</h1>
 <h2>Javascript Gantt Chart for vue, jquery, vanilla js and other frameworks</h2>
 
-<br>
-<h3>Project moved as next major version to <a href="https://github.com/neuronetio/gantt-schedule-timeline-calendar">gantt-schedule-timeline-calendar</a></h3><br><br>
-
-<h2><a href="https://neuronet.io/gantt-elastic/" target="_blank">Gantt-elastic demo here</a></h2>
+<h2><a href="https://jianguoht.github.io/gantt-elastic-h/" target="_blank">Gantt-elastic document here</a></h2>
 
 ![preview img](https://github.com/neuronetio/gantt-elastic/raw/master/gantt-elastic.jpg)
 ![preview gif](https://github.com/neuronetio/gantt-elastic/raw/master/gantt-elastic.gif)
 ![preview gif](https://github.com/neuronetio/gantt-elastic/raw/master/grab-scroll.gif)
 
-## Gantt-elastic
-
-is a vue component but it could be used in other frameworks or even with jQuery (vue is kind of elastic and lightweight framework).
-
-[WIKI](https://github.com/neuronetio/gantt-elastic/wiki)
-
-[Vue Example](https://github.com/neuronetio/vue-gantt-elastic)
-
 ### Installation
 
-`npm install --save gantt-elastic` or download zip from github / clone repo
+`npm install --save gantt-elastic`-h or download zip from github / clone repo
 
 and if you want default header
 
@@ -69,8 +58,7 @@ and if you want default header
         {
           id: 1,
           label: 'Make some noise',
-          user:
-            '<a href="https://www.google.com/search?q=John+Doe" target="_blank" style="color:#0077c0;">John Doe</a>',
+          user: '<a href="https://www.google.com/search?q=John+Doe" target="_blank" style="color:#0077c0;">John Doe</a>',
           start: getDate(-24 * 5),
           duration: 15 * 24 * 60 * 60 * 1000,
           progress: 85,
@@ -80,8 +68,7 @@ and if you want default header
         {
           id: 2,
           label: 'With great power comes great responsibility',
-          user:
-            '<a href="https://www.google.com/search?q=Peter+Parker" target="_blank" style="color:#0077c0;">Peter Parker</a>',
+          user: '<a href="https://www.google.com/search?q=Peter+Parker" target="_blank" style="color:#0077c0;">Peter Parker</a>',
           parentId: 1,
           start: getDate(-24 * 4),
           duration: 4 * 24 * 60 * 60 * 1000,
@@ -105,8 +92,7 @@ and if you want default header
         {
           id: 3,
           label: 'Courage is being scared to death, but saddling up anyway.',
-          user:
-            '<a href="https://www.google.com/search?q=John+Wayne" target="_blank" style="color:#0077c0;">John Wayne</a>',
+          user: '<a href="https://www.google.com/search?q=John+Wayne" target="_blank" style="color:#0077c0;">John Wayne</a>',
           parentId: 2,
           start: getDate(-24 * 3),
           duration: 2 * 24 * 60 * 60 * 1000,
@@ -116,8 +102,7 @@ and if you want default header
         {
           id: 4,
           label: 'Put that toy AWAY!',
-          user:
-            '<a href="https://www.google.com/search?q=Clark+Kent" target="_blank" style="color:#0077c0;">Clark Kent</a>',
+          user: '<a href="https://www.google.com/search?q=Clark+Kent" target="_blank" style="color:#0077c0;">Clark Kent</a>',
           start: getDate(-24 * 2),
           duration: 2 * 24 * 60 * 60 * 1000,
           progress: 50,
@@ -354,10 +339,6 @@ import GanttElastic from 'gantt-elastic/src/GantElastic.vue'; // if you want vue
 // and the same with require
 const GanttElastic = require('gantt-elastic/dist/GantElastic.common.js');
 ```
-
-### uglifyjs
-
-If you are using uglifyjs in your project be sure to have es6 compatible version like [uglify-es](https://www.npmjs.com/package/uglify-es)
 
 ### Licensce
 
