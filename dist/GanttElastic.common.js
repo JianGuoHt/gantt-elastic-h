@@ -502,7 +502,7 @@ if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
 var add = __webpack_require__(2).default
-var update = add("04c12213", content, false, {});
+var update = add("1af3dc42", content, false, {});
 // Hot Module Replacement
 if(false) {}
 
@@ -1551,8 +1551,8 @@ module.exports = g;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_GanttElastic_vue_vue_type_style_index_0_id_330efaac_prod_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_GanttElastic_vue_vue_type_style_index_0_id_330efaac_prod_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_GanttElastic_vue_vue_type_style_index_0_id_330efaac_prod_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_GanttElastic_vue_vue_type_style_index_0_id_1ca074be_prod_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_GanttElastic_vue_vue_type_style_index_0_id_1ca074be_prod_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_GanttElastic_vue_vue_type_style_index_0_id_1ca074be_prod_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
 
 
@@ -1583,7 +1583,7 @@ __webpack_require__.d(__webpack_exports__, "mergeDeep", function() { return /* r
 __webpack_require__.d(__webpack_exports__, "mergeDeepReactive", function() { return /* reexport */ mergeDeepReactive; });
 __webpack_require__.d(__webpack_exports__, "notEqualDeep", function() { return /* reexport */ notEqualDeep; });
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/vue-loader/lib??vue-loader-options!./src/GanttElastic.vue?vue&type=template&id=330efaac&
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/vue-loader/lib??vue-loader-options!./src/GanttElastic.vue?vue&type=template&id=1ca074be&
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c,
@@ -1614,7 +1614,7 @@ var staticRenderFns = []
 render._withStripped = true
 
 
-// CONCATENATED MODULE: ./src/GanttElastic.vue?vue&type=template&id=330efaac&
+// CONCATENATED MODULE: ./src/GanttElastic.vue?vue&type=template&id=1ca074be&
 
 // EXTERNAL MODULE: external "Vue"
 var external_Vue_ = __webpack_require__(7);
@@ -6821,6 +6821,13 @@ const GanttElastic = {
     },
 
     /**
+     * go to current time line
+     */
+    goCurrentTime() {
+      this.$emit('recenterPosition');
+    },
+
+    /**
      * Get task by id
      *
      * @param {any} taskId
@@ -7748,8 +7755,8 @@ const GanttElastic = {
 
 // CONCATENATED MODULE: ./src/GanttElastic.vue?vue&type=script&lang=js&
  /* harmony default export */ var src_GanttElasticvue_type_script_lang_js_ = (GanttElasticvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/GanttElastic.vue?vue&type=style&index=0&id=330efaac&prod&lang=css&
-var GanttElasticvue_type_style_index_0_id_330efaac_prod_lang_css_ = __webpack_require__(16);
+// EXTERNAL MODULE: ./src/GanttElastic.vue?vue&type=style&index=0&id=1ca074be&prod&lang=css&
+var GanttElasticvue_type_style_index_0_id_1ca074be_prod_lang_css_ = __webpack_require__(16);
 
 // CONCATENATED MODULE: ./src/GanttElastic.vue
 

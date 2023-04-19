@@ -8,9 +8,10 @@ sidebar: auto
 
 ### 安装
 
-`npm install gantt-elastic-h --save # yarn add gantt-elastic-h`
+`npm install gantt-elastic-h --save # yarn add gantt-elastic-h # pnpm add gantt-elastic-h`
 
 <component v-if="dynamicComponent" :is="dynamicComponent"></component>
+<a href="https://jianguoht.github.io/gantt-elastic-h/demo/" target="_blank">新标签页中打开</a>
 ::: details 点击查看代码
 <<< @/demo/GanttElastic.standalone.vue
 :::

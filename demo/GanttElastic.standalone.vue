@@ -25,6 +25,11 @@
           <el-form-item label="zoom-Y">
             <el-slider v-model="height" :min="7" :max="100" style="width: 200px"></el-slider>
           </el-form-item>
+
+          <el-form-item label="zoom-X">
+            <el-slider v-model="scale" :min="2" :max="24" style="width: 200px"></el-slider>
+            <span>快捷方式：将鼠标置于右侧图表上，按住 ctrl + 鼠标滚轮，进行缩放</span>
+          </el-form-item>
         </el-form>
       </div>
       <component v-if="components.footer" :is="components.footer" slot="footer"></component>
@@ -35,8 +40,13 @@
 
       <template slot="operation" slot-scope="row">
         <el-button size="mini" @click="onUpdate(row)">修改</el-button>
+        <el-button size="mini" type="danger" @click="onDel(row)">删除</el-button>
       </template>
     </gantt-elastic>
+    <div style="margin-top: 10px">
+      <el-button @click="addTask">Add task</el-button>
+      <el-button @click="addChildrenTask">Add children task</el-button>
+    </div>
 
     <el-dialog title="修改" :visible.sync="dialogFormVisible">
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
@@ -76,6 +86,8 @@
 
 <script>
 import dayjs from 'dayjs';
+var duration = require('dayjs/plugin/duration');
+dayjs.extend(duration);
 import GanttElastic from '../src/GanttElastic.vue';
 
 function getDate(hours) {
@@ -110,6 +122,8 @@ export default {
         timeArr: [{ required: true, message: '不能为空', trigger: ['blur', 'change'] }],
       },
       // modeRadio: '',
+      lastId: 16,
+      localScale: 0,
 
       components: {},
       tasks: [
@@ -347,7 +361,7 @@ export default {
             },
             {
               id: 2,
-              label: 'Description',
+              label: '描述',
               value: 'label',
               width: 200,
               expander: true,
@@ -361,22 +375,74 @@ export default {
             },
             {
               id: 3,
-              label: 'Assigned to',
+              label: '用户',
               value: 'user',
               width: 130,
               html: true,
             },
             {
               id: 3,
-              label: 'Start',
-              value: (task) => dayjs(task.start).format('YYYY-MM-DD'),
-              width: 78,
+              label: '开始时间',
+              value: (task) => dayjs(task.startTime).format('YYYY-MM-DD'),
+              width: 90,
+              style: {
+                'task-list-header-label': {
+                  'text-align': 'center',
+                  width: '100%',
+                },
+                'task-list-item-value-container': {
+                  'text-align': 'center',
+                  width: '100%',
+                },
+              },
+            },
+            {
+              id: 7,
+              label: '结束时间',
+              value: (task) => dayjs(task.endTime).format('YYYY-MM-DD'),
+              width: 90,
+              style: {
+                'task-list-header-label': {
+                  'text-align': 'center',
+                  width: '100%',
+                },
+                'task-list-item-value-container': {
+                  'text-align': 'center',
+                  width: '100%',
+                },
+              },
+            },
+            {
+              id: 8,
+              label: '天数',
+              value: (task) => dayjs.duration(task.duration).days(),
+              width: 50,
+              style: {
+                'task-list-header-label': {
+                  'text-align': 'center',
+                  width: '100%',
+                },
+                'task-list-item-value-container': {
+                  'text-align': 'center',
+                  width: '100%',
+                },
+              },
             },
             {
               id: 4,
-              label: 'Type',
+              label: '类型',
               value: 'type',
-              width: 68,
+              width: 80,
+              style: {
+                'task-list-header-label': {
+                  'text-align': 'center',
+                  width: '100%',
+                },
+                'task-list-item-value-container': {
+                  'text-align': 'center',
+                  width: '100%',
+                },
+              },
             },
             {
               id: 5,
@@ -400,7 +466,7 @@ export default {
               label: '操作',
               value: 'operation',
               slot: 'operation',
-              width: 80,
+              width: 160,
               style: {
                 'task-list-header-label': {
                   'text-align': 'center',
@@ -432,7 +498,6 @@ export default {
 
     height: {
       get() {
-        console.log(this.options.row.height);
         return this.options.row.height;
       },
       set(value) {
@@ -440,6 +505,22 @@ export default {
         elastic.$emit('row-height-change', Number(value));
       },
     },
+
+    scale: {
+      get() {
+        return this.localScale;
+      },
+      set(value) {
+        const elastic = this.$refs.elastic;
+        this.localScale = Number(value);
+        elastic.onTimeZoomChange(Number(value));
+      },
+    },
+  },
+
+  mounted() {
+    const elastic = this.$refs.elastic;
+    this.localScale = elastic.getTimeZoom();
   },
 
   methods: {
@@ -453,6 +534,32 @@ export default {
         }
       });
       this.dialogFormVisible = true;
+    },
+
+    // 删除
+    onDel(row) {
+      console.log(row);
+      const { task } = row;
+      const ids = [task.id, ...task.allChildren];
+      this.$confirm(`确认删除以下任务[${ids.toString()}]为吗?`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      })
+        .then(() => {
+          this.tasks = this.tasks.filter((item) => item.id !== row.task.id);
+          console.log(this.tasks);
+          this.$message({
+            type: 'success',
+            message: '删除成功!',
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除',
+          });
+        });
     },
 
     onSubmit() {
@@ -474,6 +581,45 @@ export default {
     goNow(type) {
       const elastic = this.$refs.elastic;
       elastic.goCurrentTime();
+    },
+
+    addTask() {
+      this.tasks.push({
+        id: this.lastId++,
+        label: 'Yeaahh! you have added a task bro!',
+        user: '<a href="https://images.pexels.com/photos/423364/pexels-photo-423364.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" target="_blank" style="color:#0077c0;">Awesome!</a>',
+        start: getDate(24 * 3),
+        duration: 1 * 24 * 60 * 60 * 1000,
+        percent: 50,
+        type: 'project',
+      });
+    },
+
+    addChildrenTask() {
+      this.$prompt('请输入父节点ID', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /^\+?[1-9]\d*$/,
+        inputErrorMessage: '请输入数字',
+      })
+        .then(({ value }) => {
+          const id = Number(value);
+          if (!this.tasks.some((item) => item.id === id)) {
+            this.$message.warning('没有找到ID为' + id + '的父节点');
+            return;
+          }
+          this.tasks.push({
+            id: this.lastId++,
+            parentId: Number(value),
+            label: 'Yeaahh! you have added a children task bro!',
+            user: '<a href="https://images.pexels.com/photos/423364/pexels-photo-423364.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" target="_blank" style="color:#0077c0;">Awesome!</a>',
+            start: getDate(24 * 3),
+            duration: 1 * 24 * 60 * 60 * 1000,
+            percent: 50,
+            type: 'project',
+          });
+        })
+        .catch(() => {});
     },
   },
 };
