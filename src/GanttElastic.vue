@@ -784,6 +784,13 @@ const GanttElastic = {
     },
 
     /**
+     * go to current time line
+     */
+    goCurrentTime() {
+      this.$emit('recenterPosition');
+    },
+
+    /**
      * Get task by id
      *
      * @param {any} taskId

@@ -10,7 +10,7 @@ sidebar: auto
 
 `npm install gantt-elastic-h --save # yarn add gantt-elastic-h`
 
-<GanttElastic></GanttElastic>
+<component v-if="dynamicComponent" :is="dynamicComponent"></component>
 ::: details 点击查看代码
 <<< @/demo/GanttElastic.standalone.vue
 :::
@@ -230,12 +230,14 @@ date 为 dayjs 实例
 
 ### Methods
 
-| 方法名称       | 说明                                                         | 参数                               |
-| -------------- | ------------------------------------------------------------ | ---------------------------------- |
-| updateTask     | 更新任务, 该方法不能更新任务时间，如需更新时间使用 `updateTaskTime`；<br/>taskid： 任务ID；<br/>data： 修改后的数据；<br /> | Function(taskId, data, props = {}) |
-| updateTaskTime | 更新任务时间;<br/>taskid： 任务ID；<br/>start： 开始时间；<br />end：结束时间 | Function(taskId, start, end)       |
-| getTask        | 根据任务id，获取任务数据；                                   | Function(taskId)                   |
-| getChildren    | 根据任务id，获取当前任务的子任务；                           | Function(taskId)                   |
+| 方法名称       | 说明                                                                                                                         | 参数                               |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| updateTask     | 更新任务, 该方法不能更新任务时间，如需更新时间使用 `updateTaskTime`；<br/>taskid： 任务 ID；<br/>data： 修改后的数据；<br /> | Function(taskId, data, props = {}) |
+| updateTaskTime | 更新任务时间;<br/>taskid： 任务 ID；<br/>start： 开始时间；<br />end：结束时间                                               | Function(taskId, start, end)       |
+| getTask        | 根据任务 id，获取任务数据；                                                                                                  | Function(taskId)                   |
+| getChildren    | 根据任务 id，获取当前任务的子任务；                                                                                          | Function(taskId)                   |
+| goCurrentTime  | 跳转到当前时间线                                                                                                             | Function()                         |
+|                |                                                                                                                              |                                    |
 
 ### Events
 

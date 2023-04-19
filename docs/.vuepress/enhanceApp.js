@@ -1,8 +1,19 @@
-import GanttElasticStandalone from '../../demo/GanttElastic.standalone.vue';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
 export default ({ Vue }) => {
   Vue.use(ElementUI);
-  Vue.component('GanttElastic', GanttElasticStandalone);
+  Vue.mixin({
+    data() {
+      return {
+        dynamicComponent: '',
+      };
+    },
+    mounted() {
+      import('../../demo/GanttElastic.standalone.vue').then((m) => {
+        this.dynamicComponent = m.default;
+        Vue.component('GanttElastic', m.default);
+      });
+    },
+  });
 };

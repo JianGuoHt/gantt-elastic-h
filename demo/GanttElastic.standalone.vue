@@ -9,7 +9,24 @@
 <template>
   <div>
     <gantt-elastic ref="elastic" :tasks="tasks" :options="options" :dynamicStyle="dynamicStyle">
-      <component v-if="components.header" :is="components.header" slot="header"></component>
+      <div slot="header">
+        <el-form size="mini" inline>
+          <el-form-item label="显示模式:">
+            <el-radio-group v-model="modeRadio">
+              <el-radio :label="false">图表</el-radio>
+              <el-radio :label="true">列表 + 图表</el-radio>
+            </el-radio-group>
+          </el-form-item>
+
+          <el-form-item>
+            <el-button @click="goNow">Go Now</el-button>
+          </el-form-item>
+
+          <el-form-item label="zoom-Y">
+            <el-slider v-model="height" :min="7" :max="100" style="width: 200px"></el-slider>
+          </el-form-item>
+        </el-form>
+      </div>
       <component v-if="components.footer" :is="components.footer" slot="footer"></component>
 
       <template slot="label" slot-scope="{ task }">
@@ -92,6 +109,7 @@ export default {
         progress: [{ required: true, message: '不能为空', trigger: ['blur', 'change'] }],
         timeArr: [{ required: true, message: '不能为空', trigger: ['blur', 'change'] }],
       },
+      // modeRadio: '',
 
       components: {},
       tasks: [
@@ -316,6 +334,7 @@ export default {
           },
         },
         taskList: {
+          display: true,
           expander: {
             straight: false,
           },
@@ -400,6 +419,29 @@ export default {
     };
   },
 
+  computed: {
+    modeRadio: {
+      get() {
+        return this.options.taskList.display;
+      },
+      set(val) {
+        console.log(val);
+        this.options.taskList.display = val;
+      },
+    },
+
+    height: {
+      get() {
+        console.log(this.options.row.height);
+        return this.options.row.height;
+      },
+      set(value) {
+        const elastic = this.$refs.elastic;
+        elastic.$emit('row-height-change', Number(value));
+      },
+    },
+  },
+
   methods: {
     onUpdate(row) {
       console.log(row);
@@ -427,6 +469,11 @@ export default {
           return false;
         }
       });
+    },
+
+    goNow(type) {
+      const elastic = this.$refs.elastic;
+      elastic.goCurrentTime();
     },
   },
 };
